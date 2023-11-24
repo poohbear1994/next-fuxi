@@ -1,5 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UserService } from './user.service';
+import { ConfigService } from '@nestjs/config';
+import { ConfigEnum } from '../enum/config.enum';
 
 type AddUserParams = {
   name: string;
@@ -9,13 +11,19 @@ type AddUserParams = {
 // 这里可以理解为我们routePath的pref，前缀为user时，走这个controller，'/user/xxxxx'
 @Controller('user')
 export class UserController {
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService,
+    private configService: ConfigService,
+  ) {
     // 等效于： this.userService = UserService
   }
 
   // GET请求
   @Get()
   getUsers(): any {
+    const db = this.configService.get(ConfigEnum.DB);
+    const dbHost = this.configService.get(ConfigEnum.DB_HOST);
+    console.log(db, dbHost);
     return this.userService.getUsers();
   }
 
