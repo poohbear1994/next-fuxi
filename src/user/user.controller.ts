@@ -23,7 +23,8 @@ export class UserController {
   getUsers(): any {
     const db = this.configService.get(ConfigEnum.DB);
     const dbHost = this.configService.get(ConfigEnum.DB_HOST);
-    console.log(db, dbHost);
+    const dbUrl = this.configService.get('DB_URL');
+    console.log(db, dbHost, dbUrl);
     return this.userService.getUsers();
   }
 
