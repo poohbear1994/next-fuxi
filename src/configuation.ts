@@ -10,9 +10,7 @@ const schema = Joi.object({
     .valid('development', 'production')
     .default('development'),
   db: Joi.object({
-    mysql1: Joi.object({
-      host: Joi.string().ip(),
-    }),
+    host: Joi.string().ip(),
   }),
 });
 
