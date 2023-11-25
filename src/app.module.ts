@@ -2,12 +2,7 @@ import { Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { RangeModule } from './range/range.module';
 import { ConfigModule } from '@nestjs/config';
-import * as dotenv from 'dotenv';
-
-const envFilePath =
-  process.env.NODE_ENV === 'production'
-    ? '.env.production'
-    : '.env.development';
+import configuation from './configuation';
 
 // 将应用程序的不同部分组织成独立的模块，每个模块具有明确的职责和功能
 @Module({
@@ -16,8 +11,9 @@ const envFilePath =
     ConfigModule.forRoot({
       isGlobal: true,
       // 读取指定文件的环境配置
-      envFilePath: envFilePath,
-      load: [() => dotenv.config({ path: '.env' })],
+      // envFilePath: envFilePath,
+      load: [configuation],
+      ignoreEnvFile: true,
     }),
     UserModule,
     RangeModule,
