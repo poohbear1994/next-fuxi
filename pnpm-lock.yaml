@@ -20,6 +20,9 @@ dependencies:
   dotenv:
     specifier: ^16.3.1
     version: registry.npmmirror.com/dotenv@16.3.1
+  joi:
+    specifier: ^17.11.0
+    version: registry.npmmirror.com/joi@17.11.0
   js-yaml:
     specifier: ^4.1.0
     version: registry.npmmirror.com/js-yaml@4.1.0
@@ -663,6 +666,20 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
+  registry.npmmirror.com/@hapi/hoek@9.3.0:
+    resolution: {integrity: sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ==, tarball: https://registry.npmmirror.com/@hapi/hoek/-/hoek-9.3.0.tgz}
+    name: '@hapi/hoek'
+    version: 9.3.0
+    dev: false
+
+  registry.npmmirror.com/@hapi/topo@5.1.0:
+    resolution: {integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==, tarball: https://registry.npmmirror.com/@hapi/topo/-/topo-5.1.0.tgz}
+    name: '@hapi/topo'
+    version: 5.1.0
+    dependencies:
+      '@hapi/hoek': registry.npmmirror.com/@hapi/hoek@9.3.0
+    dev: false
+
   registry.npmmirror.com/@humanwhocodes/config-array@0.11.13:
     resolution: {integrity: sha512-JSBDMiDKSzQVngfRjOdFXgFfklaXI4K9nLF49Auh21lmBWRLIK3+xTErTWD4KU54pb6coM6ESE7Awz/FNU3zgQ==, tarball: https://registry.npmmirror.com/@humanwhocodes/config-array/-/config-array-0.11.13.tgz}
     name: '@humanwhocodes/config-array'
@@ -1286,6 +1303,26 @@ packages:
       picocolors: registry.npmmirror.com/picocolors@1.0.0
       tslib: registry.npmmirror.com/tslib@2.6.2
     dev: true
+
+  registry.npmmirror.com/@sideway/address@4.1.4:
+    resolution: {integrity: sha512-7vwq+rOHVWjyXxVlR76Agnvhy8I9rpzjosTESvmhNeXOXdZZB15Fl+TI9x1SiHZH5Jv2wTGduSxFDIaq0m3DUw==, tarball: https://registry.npmmirror.com/@sideway/address/-/address-4.1.4.tgz}
+    name: '@sideway/address'
+    version: 4.1.4
+    dependencies:
+      '@hapi/hoek': registry.npmmirror.com/@hapi/hoek@9.3.0
+    dev: false
+
+  registry.npmmirror.com/@sideway/formula@3.0.1:
+    resolution: {integrity: sha512-/poHZJJVjx3L+zVD6g9KgHfYnb443oi7wLu/XKojDviHy6HOEOA6z1Trk5aR1dGcmPenJEgb2sK2I80LeS3MIg==, tarball: https://registry.npmmirror.com/@sideway/formula/-/formula-3.0.1.tgz}
+    name: '@sideway/formula'
+    version: 3.0.1
+    dev: false
+
+  registry.npmmirror.com/@sideway/pinpoint@2.0.0:
+    resolution: {integrity: sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==, tarball: https://registry.npmmirror.com/@sideway/pinpoint/-/pinpoint-2.0.0.tgz}
+    name: '@sideway/pinpoint'
+    version: 2.0.0
+    dev: false
 
   registry.npmmirror.com/@sinclair/typebox@0.27.8:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==, tarball: https://registry.npmmirror.com/@sinclair/typebox/-/typebox-0.27.8.tgz}
@@ -4681,6 +4718,18 @@ packages:
       - supports-color
       - ts-node
     dev: true
+
+  registry.npmmirror.com/joi@17.11.0:
+    resolution: {integrity: sha512-NgB+lZLNoqISVy1rZocE9PZI36bL/77ie924Ri43yEvi9GUUMPeyVIr8KdFTMUlby1p0PBYMk9spIxEUQYqrJQ==, tarball: https://registry.npmmirror.com/joi/-/joi-17.11.0.tgz}
+    name: joi
+    version: 17.11.0
+    dependencies:
+      '@hapi/hoek': registry.npmmirror.com/@hapi/hoek@9.3.0
+      '@hapi/topo': registry.npmmirror.com/@hapi/topo@5.1.0
+      '@sideway/address': registry.npmmirror.com/@sideway/address@4.1.4
+      '@sideway/formula': registry.npmmirror.com/@sideway/formula@3.0.1
+      '@sideway/pinpoint': registry.npmmirror.com/@sideway/pinpoint@2.0.0
+    dev: false
 
   registry.npmmirror.com/js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==, tarball: https://registry.npmmirror.com/js-tokens/-/js-tokens-4.0.0.tgz}
