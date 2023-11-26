@@ -4,6 +4,10 @@ import { RangeModule } from './range/range.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuation from './configuation';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import User from './user/user.entity';
+import Profile from './user/profile.entity';
+import Logs from './logs/logs.entity';
+import Roles from './roles/roles.entity';
 
 // 将应用程序的不同部分组织成独立的模块，每个模块具有明确的职责和功能
 @Module({
@@ -31,7 +35,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
           username,
           password,
           database,
-          entities: [],
+          entities: [User, Profile, Logs, Roles],
           // 同步本地的schema与数据库 => 初始化的时候使用
           synchronize: true,
           logging: ['error'],
