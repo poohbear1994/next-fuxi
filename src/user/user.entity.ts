@@ -1,5 +1,13 @@
 import Logs from 'src/logs/logs.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import Roles from 'src/roles/roles.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 class User {
@@ -14,6 +22,10 @@ class User {
 
   @OneToMany(() => Logs, (log) => log.user)
   logs: Logs[];
+
+  @ManyToMany(() => Roles, (role) => role.users)
+  @JoinTable({ name: 'users_roles' })
+  roles: Roles[];
 }
 
 export default User;
