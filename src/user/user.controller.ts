@@ -64,4 +64,20 @@ export class UserController {
   deleteUser(@Query('id') id: string) {
     return this.userService.remove(+id);
   }
+
+  /**
+   * @description: 查询用户操作日志
+   */
+  @Get('logs')
+  getUserLogs(@Query('id') id: string) {
+    return this.userService.findLogs(+id);
+  }
+
+  /**
+   * @description: 查询用户文件
+   */
+  @Get('profile')
+  getUserProfile(@Query('id') id: string) {
+    return this.userService.findProfile(+id);
+  }
 }

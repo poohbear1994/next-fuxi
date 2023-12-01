@@ -6,8 +6,10 @@ import {
   JoinTable,
   ManyToMany,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import Profile from './profile.entity';
 
 @Entity()
 class User {
@@ -26,6 +28,9 @@ class User {
   @ManyToMany(() => Roles, (role) => role.users)
   @JoinTable({ name: 'users_roles' })
   roles: Roles[];
+
+  @OneToOne(() => Profile, (profile) => profile.user)
+  profile: Profile;
 }
 
 export default User;
