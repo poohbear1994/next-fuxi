@@ -10,19 +10,21 @@ import {
 import { UserService } from './user.service';
 import { ConfigService } from '@nestjs/config';
 import User from './user.entity';
-import { Logger } from '@nestjs/common';
+// import { Logger } from '@nestjs/common';
+import { Logger } from 'nestjs-pino';
 
 // 这里可以理解为我们routePath的pref，前缀为user时，走这个controller，'/user/xxxxx'
 @Controller('user')
 export class UserController {
-  private logger = new Logger(UserController.name);
+  // private logger = new Logger(UserController.name);
 
   constructor(
     private userService: UserService,
     private configService: ConfigService,
+    private logger: Logger,
   ) {
     // 等效于： this.userService = UserService
-    this.logger.log(`UserController init`);
+    // this.logger.log(`UserController init`);
   }
 
   /**
@@ -31,7 +33,7 @@ export class UserController {
   // GET请求
   @Get()
   getUsers(): any {
-    this.logger.log(`请求getUsers成功`);
+    // this.logger.log(`请求getUsers成功`);
     return this.userService.findAll();
   }
 

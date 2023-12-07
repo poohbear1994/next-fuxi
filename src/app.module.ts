@@ -5,6 +5,8 @@ import { RolesModule } from './roles/roles.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuation from './configuation';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { LoggerModule } from 'nestjs-pino';
+import { join } from 'path';
 import User from './user/user.entity';
 import Profile from './user/profile.entity';
 import Logs from './logs/logs.entity';
@@ -41,6 +43,33 @@ import Roles from './roles/roles.entity';
           synchronize: true,
           logging: true,
         };
+      },
+    }),
+    // 注册pino Logger模块
+    LoggerModule.forRoot({
+      pinoHttp: {
+        transport: {
+          targets: [
+            {
+              target: 'pino-pretty',
+              options: {
+                colorize: true,
+              },
+            },
+            {
+              target: 'pino-roll',
+              options: {
+                // 日志生成位置
+                file: join('logs', 'log.txt'),
+                // 滚动频率
+                frequency: 'daily',
+                // 文件大小超过多少时滚动
+                size: '10240k',
+                mkdir: true,
+              },
+            },
+          ],
+        },
       },
     }),
     UserModule,
