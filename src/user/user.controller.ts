@@ -98,4 +98,12 @@ export class UserController {
   getUserProfile(@Query('id') id: string) {
     return this.userService.findProfile(+id);
   }
+
+  /**
+   * @description: 根据结果分类获取指定用户操作日志
+   */
+  @Get('logsByGroup')
+  getUserLogsByGroup(@Query('id') id: string) {
+    return this.userService.findLogsByGroup(+id);
+  }
 }

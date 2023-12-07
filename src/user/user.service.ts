@@ -122,4 +122,35 @@ export class UserService {
       },
     });
   }
+
+  /**
+   * @description: 聚合查询日志
+   * @param {number} id
+   */
+  findLogsByGroup(id: number) {
+    // 方式1使用sql语句
+    // return this.logsRepository.query(
+    //   `SELECT logs.result as result, COUNT(logs.result) as count FROM logs
+    //   JOIN user ON user.id = logs.userId
+    //   WHERE user.id = ${id}
+    //   GROUP BY logs.result
+    //   `,
+    // );
+    // 方式2：使用typeORM封装的链式API
+    return (
+      this.logsRepository
+        .createQueryBuilder('logs')
+        // 选择logs表的result列，生成数据字段指定为result
+        .select('logs.result', 'result')
+        // 选择logs表的result列，生成数据字段指定为count
+        .addSelect('COUNT("logs.result")', 'count')
+        .innerJoin('logs.user', 'user', 'user.id = logs.userId')
+        // 仅获取指定的用户的数据
+        .where('user.id = :id', { id })
+        // 根据logs的result进行数据的划分
+        .groupBy('logs.result')
+        // 获取查询结果
+        .getRawMany()
+    );
+  }
 }
