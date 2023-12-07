@@ -31,6 +31,14 @@ export class UserController {
   }
 
   /**
+   * @description: 根据Id查询用户
+   */
+  @Get('byId')
+  getUserById(@Query('id') id: string): any {
+    return this.userService.findById(+id);
+  }
+
+  /**
    * @description: 根据用户名查询用户
    */
   // GET请求
@@ -43,9 +51,11 @@ export class UserController {
    * @description: 添加用户
    */
   @Post()
-  adduser(@Body() params: Partial<User>): any {
+  adduser(
+    @Body() params: { user: Partial<User>; roleIds: Array<number> },
+  ): any {
     // 使用@Body从req对象中提取整个body对象
-    return this.userService.create(params);
+    return this.userService.create(params.user, params.roleIds);
   }
 
   /**
@@ -71,6 +81,14 @@ export class UserController {
   @Get('logs')
   getUserLogs(@Query('id') id: string) {
     return this.userService.findLogs(+id);
+  }
+
+  /**
+   * @description: 查询用户角色列表
+   */
+  @Get('roles')
+  getUserRoles(@Query('id') id: string) {
+    return this.userService.findRoles(+id);
   }
 
   /**

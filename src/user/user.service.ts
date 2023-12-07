@@ -1,18 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import User from './user.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import Profile from './profile.entity';
 import Logs from 'src/logs/logs.entity';
+import Roles from 'src/roles/roles.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     // 注入User的存储库
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
     @InjectRepository(Profile)
     private readonly profileRepository: Repository<Profile>,
-    @InjectRepository(Logs) private readonly logsRepository: Repository<Logs>,
+    @InjectRepository(Logs)
+    private readonly logsRepository: Repository<Logs>,
+    @InjectRepository(Roles)
+    private readonly rolesRepository: Repository<Roles>,
   ) {}
 
   /**
@@ -35,13 +40,24 @@ export class UserService {
    * @param {number} id
    */
   findById(id: number) {
-    return this.userRepository.findOne({ where: { id } });
+    return this.userRepository.findOne({
+      where: { id },
+      relations: {
+        profile: true,
+        logs: true,
+        roles: true,
+      },
+    });
   }
 
   /**
    * @description: 创建用户
    */
-  async create(user: Partial<User>) {
+  async create(user: Partial<User>, roleIds: Array<number>) {
+    const roleList = await this.rolesRepository.findBy({
+      id: In(roleIds),
+    });
+    user.roles = roleList;
     const temp = await this.userRepository.create(user);
     return this.userRepository.save(temp);
   }
@@ -90,6 +106,19 @@ export class UserService {
       },
       relations: {
         user: true,
+      },
+    });
+  }
+
+  /**
+   * @description: 查询用户角色
+   * @param {number} id
+   */
+  async findRoles(id: number) {
+    const user = await this.findById(id);
+    return this.rolesRepository.find({
+      where: {
+        users: user,
       },
     });
   }

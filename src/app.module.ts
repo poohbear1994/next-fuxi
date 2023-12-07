@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { RangeModule } from './range/range.module';
+import { RolesModule } from './roles/roles.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuation from './configuation';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -44,6 +45,7 @@ import Roles from './roles/roles.entity';
     }),
     UserModule,
     RangeModule,
+    RolesModule,
   ],
   // 此模块中定义的控制器的可选列表，这些控制器必须被实例化
   controllers: [],
