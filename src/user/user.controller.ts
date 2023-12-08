@@ -3,10 +3,13 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Logger,
   Post,
   Put,
   Query,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ConfigService } from '@nestjs/config';
@@ -34,6 +37,11 @@ export class UserController {
   // GET请求
   @Get()
   getUsers(): any {
+    const user = { isAdmin: false };
+    if (!user.isAdmin) {
+      // throw new HttpException('无权限访问此接口', HttpStatus.UNAUTHORIZED);
+      throw new UnauthorizedException('无权限访问此接口');
+    }
     this.logger.log(`请求getUsers成功`);
     return this.userService.findAll();
   }
