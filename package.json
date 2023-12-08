@@ -36,6 +36,7 @@
     "pino-pretty": "^10.2.3",
     "pino-roll": "1.0.0-rc.1",
     "reflect-metadata": "^0.1.13",
+    "request-ip": "^3.3.0",
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.17",
     "winston": "^3.11.0",

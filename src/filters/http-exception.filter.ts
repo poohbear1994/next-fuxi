@@ -1,7 +1,3 @@
-/**
- * @Description: http请求异常过滤器
- * @see{@link https://docs.nestjs.cn/10/exceptionfilters}
- */
 import {
   ArgumentsHost,
   Catch,
@@ -10,7 +6,10 @@ import {
   LoggerService,
 } from '@nestjs/common';
 
-// 不传参数，则会捕获所有异常，现在则只捕获http异常
+/**
+ * @description: http请求异常过滤器
+ * @see{@link https://docs.nestjs.cn/10/exceptionfilters}
+ */
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
   constructor(private logger: LoggerService) {}

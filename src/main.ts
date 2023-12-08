@@ -1,10 +1,11 @@
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { createLogger } from 'winston';
 import * as winston from 'winston';
 import { WinstonModule, utilities } from 'nest-winston';
 import 'winston-daily-rotate-file';
-import { HttpExceptionFilter } from './filters/http-exception.filter';
+// import { HttpExceptionFilter } from './filters/http-exception.filter';
+import { AllExceptionFilter } from './filters/all-exception.filter';
 
 /**
  * @description: 生成winston日志实例
@@ -63,7 +64,9 @@ async function bootstrap() {
     logger,
   });
   // 使用全局过滤器处理异常
-  app.useGlobalFilters(new HttpExceptionFilter(logger));
+  app.useGlobalFilters(
+    new AllExceptionFilter(logger, app.get(HttpAdapterHost)),
+  );
   await app.listen(3000);
 }
 bootstrap();
