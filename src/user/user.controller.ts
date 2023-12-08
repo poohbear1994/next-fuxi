@@ -10,15 +10,18 @@ import {
   Put,
   Query,
   UnauthorizedException,
+  UseFilters,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ConfigService } from '@nestjs/config';
 import User from './user.entity';
+import { HttpExceptionFilter } from 'src/filters/http-exception.filter';
 // import { Logger } from '@nestjs/common';
 // import { Logger } from 'nestjs-pino';
 
 // 这里可以理解为我们routePath的pref，前缀为user时，走这个controller，'/user/xxxxx'
 @Controller('user')
+@UseFilters(new HttpExceptionFilter(Logger))
 export class UserController {
   // private logger = new Logger(UserController.name);
 
