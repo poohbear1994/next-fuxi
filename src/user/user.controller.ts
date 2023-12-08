@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Post,
   Put,
   Query,
@@ -11,7 +12,7 @@ import { UserService } from './user.service';
 import { ConfigService } from '@nestjs/config';
 import User from './user.entity';
 // import { Logger } from '@nestjs/common';
-import { Logger } from 'nestjs-pino';
+// import { Logger } from 'nestjs-pino';
 
 // 这里可以理解为我们routePath的pref，前缀为user时，走这个controller，'/user/xxxxx'
 @Controller('user')
@@ -33,7 +34,7 @@ export class UserController {
   // GET请求
   @Get()
   getUsers(): any {
-    // this.logger.log(`请求getUsers成功`);
+    this.logger.log(`请求getUsers成功`);
     return this.userService.findAll();
   }
 
