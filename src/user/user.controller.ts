@@ -3,35 +3,27 @@ import {
   Controller,
   Delete,
   Get,
-  HttpException,
-  HttpStatus,
   Logger,
   Post,
   Put,
   Query,
-  UnauthorizedException,
   UseFilters,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ConfigService } from '@nestjs/config';
 import User from './user.entity';
 import { HttpExceptionFilter } from 'src/filters/http-exception.filter';
-// import { Logger } from '@nestjs/common';
-// import { Logger } from 'nestjs-pino';
 
 // 这里可以理解为我们routePath的pref，前缀为user时，走这个controller，'/user/xxxxx'
 @Controller('user')
 @UseFilters(new HttpExceptionFilter(Logger))
 export class UserController {
-  // private logger = new Logger(UserController.name);
-
   constructor(
     private userService: UserService,
     private configService: ConfigService,
     private logger: Logger,
   ) {
-    // 等效于： this.userService = UserService
-    // this.logger.log(`UserController init`);
+    this.logger.log(`UserController init`);
   }
 
   /**
@@ -40,11 +32,6 @@ export class UserController {
   // GET请求
   @Get()
   getUsers(): any {
-    const user = { isAdmin: false };
-    if (!user.isAdmin) {
-      // throw new HttpException('无权限访问此接口', HttpStatus.UNAUTHORIZED);
-      throw new UnauthorizedException('无权限访问此接口');
-    }
     this.logger.log(`请求getUsers成功`);
     return this.userService.findAll();
   }
