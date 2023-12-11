@@ -5,3 +5,6 @@ db:
   username: root
   password: example
   database: testdb
+log:
+  on: false
+  level: 'info'

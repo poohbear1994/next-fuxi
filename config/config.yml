@@ -2,7 +2,4 @@ db:
   host: 127.0.0.1
   name: mysql
   port: 3306
-
-log:
-  on: true
-  level: 'info'
+  type: mysql

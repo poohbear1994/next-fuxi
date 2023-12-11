@@ -1,3 +1,10 @@
 db:
   host: 127.0.0.1
   name: mysql-prod
+  port: 3307
+  username: root
+  password: example
+  database: testdb
+log:
+  on: true
+  level: 'info'

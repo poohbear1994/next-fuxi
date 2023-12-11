@@ -4,6 +4,28 @@ import { WinstonModule, utilities } from 'nest-winston';
 import * as winston from 'winston';
 import 'winston-daily-rotate-file';
 
+/**
+ * @description: 创建日志滚动文件
+ * @param {string} level
+ * @param {string} filename
+ */
+function createDailyRotateTransport(level: string, filename: string) {
+  // 配置日志滚动文件
+  return new winston.transports.DailyRotateFile({
+    level: level,
+    dirname: 'logs',
+    filename: `${filename}-%DATE%.log`,
+    datePattern: 'YYYY-MM-DD-HH',
+    zippedArchive: true,
+    maxSize: '10m',
+    maxFiles: '14d',
+    format: winston.format.combine(
+      winston.format.timestamp(),
+      winston.format.simple(),
+    ),
+  });
+}
+
 @Module({
   imports: [
     WinstonModule.forRootAsync({
@@ -17,38 +39,15 @@ import 'winston-daily-rotate-file';
             utilities.format.nestLike(`ljx's nest-demo`),
           ),
         });
-        // 配置日志滚动文件
-        const dailyTransports = new winston.transports.DailyRotateFile({
-          level: 'warn',
-          dirname: 'logs',
-          filename: 'application-%DATE%.log',
-          datePattern: 'YYYY-MM-DD-HH',
-          zippedArchive: true,
-          maxSize: '10m',
-          maxFiles: '14d',
-          format: winston.format.combine(
-            winston.format.timestamp(),
-            winston.format.simple(),
-          ),
-        });
-        const dailyInfoTransports = new winston.transports.DailyRotateFile({
-          level: 'info',
-          dirname: 'logs',
-          filename: 'info-%DATE%.log',
-          datePattern: 'YYYY-MM-DD-HH',
-          zippedArchive: true,
-          maxSize: '10m',
-          maxFiles: '14d',
-          format: winston.format.combine(
-            winston.format.timestamp(),
-            winston.format.simple(),
-          ),
-        });
+
         return {
           transports: [
             consoleTransports,
             ...(configService.get('log')['on']
-              ? [dailyTransports, dailyInfoTransports]
+              ? [
+                  createDailyRotateTransport('info', 'application'),
+                  createDailyRotateTransport('warn', 'error'),
+                ]
               : []),
           ],
         };

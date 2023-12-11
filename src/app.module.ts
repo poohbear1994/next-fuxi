@@ -6,7 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import configuation from './configuation';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LogsModule } from './logs/logs.module';
-import ormconfig from 'ormconfig';
+import { connectionParams } from 'ormconfig';
 
 // 将应用程序的不同部分组织成独立的模块，每个模块具有明确的职责和功能
 @Global()
@@ -22,7 +22,7 @@ import ormconfig from 'ormconfig';
       ignoreEnvFile: true,
     }),
     // 导入数据库模块
-    TypeOrmModule.forRoot(ormconfig),
+    TypeOrmModule.forRoot(connectionParams),
     UserModule,
     RangeModule,
     RolesModule,
