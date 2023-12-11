@@ -9,14 +9,15 @@ import 'winston-daily-rotate-file';
     WinstonModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
+        // 定义控制台输出
         const consoleTransports = new winston.transports.Console({
           level: 'info',
           format: winston.format.combine(
             winston.format.timestamp(),
-            utilities.format.nestLike(),
+            utilities.format.nestLike(`ljx's nest-demo`),
           ),
         });
-
+        // 配置日志滚动文件
         const dailyTransports = new winston.transports.DailyRotateFile({
           level: 'warn',
           dirname: 'logs',
@@ -30,7 +31,6 @@ import 'winston-daily-rotate-file';
             winston.format.simple(),
           ),
         });
-
         const dailyInfoTransports = new winston.transports.DailyRotateFile({
           level: 'info',
           dirname: 'logs',

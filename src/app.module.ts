@@ -2,14 +2,11 @@ import { Global, Logger, Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { RangeModule } from './range/range.module';
 import { RolesModule } from './roles/roles.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import configuation from './configuation';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LogsModule } from './logs/logs.module';
-import User from './user/user.entity';
-import Profile from './user/profile.entity';
-import Logs from './logs/logs.entity';
-import Roles from './roles/roles.entity';
+import ormconfig from 'ormconfig';
 
 // 将应用程序的不同部分组织成独立的模块，每个模块具有明确的职责和功能
 @Global()
@@ -25,26 +22,7 @@ import Roles from './roles/roles.entity';
       ignoreEnvFile: true,
     }),
     // 导入数据库模块
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
-        const { host, password, port, username, database } =
-          configService.get('db');
-        return {
-          type: 'mysql',
-          host,
-          port,
-          username,
-          password,
-          database,
-          entities: [User, Profile, Logs, Roles],
-          // 同步本地的schema与数据库 => 初始化的时候使用
-          synchronize: true,
-          logging: false,
-        };
-      },
-    }),
+    TypeOrmModule.forRoot(ormconfig),
     UserModule,
     RangeModule,
     RolesModule,
