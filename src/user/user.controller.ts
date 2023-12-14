@@ -4,8 +4,9 @@ import {
   Delete,
   Get,
   Logger,
+  Param,
+  Patch,
   Post,
-  Put,
   Query,
   UseFilters,
 } from '@nestjs/common';
@@ -67,25 +68,24 @@ export class UserController {
   /**
    * @description: 更新用户信息
    */
-  @Put()
-  updateUser(@Body() params: { id: number; user: Partial<User> }): any {
-    const { id, user } = params;
-    return this.userService.update(id, user);
+  @Patch('/:id')
+  updateUser(@Param('id') id: string, @Body() user: Partial<User>): any {
+    return this.userService.update(+id, user);
   }
 
   /**
    * @description: 删除用户信息
    */
-  @Delete()
-  deleteUser(@Query('id') id: string) {
+  @Delete('/:id')
+  deleteUser(@Param('id') id: string) {
     return this.userService.remove(+id);
   }
 
   /**
    * @description: 查询用户操作日志
    */
-  @Get('logs')
-  getUserLogs(@Query('id') id: string) {
+  @Get('/logs/:id')
+  getUserLogs(@Param('id') id: string) {
     return this.userService.findLogs(+id);
   }
 

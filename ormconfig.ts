@@ -56,5 +56,3 @@ const dataSourceOptions = {
 } as DataSourceOptions;
 
 export default new DataSource(dataSourceOptions);
-
-console.log('connection', connectionParams);
