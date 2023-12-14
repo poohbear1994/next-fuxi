@@ -14,8 +14,8 @@ import { UserService } from './user.service';
 import { ConfigService } from '@nestjs/config';
 import User from './user.entity';
 import { HttpExceptionFilter } from 'src/filters/http-exception.filter';
+import type { getUserDTO } from './dto/getUser.dto';
 
-// 这里可以理解为我们routePath的pref，前缀为user时，走这个controller，'/user/xxxxx'
 @Controller('user')
 @UseFilters(new HttpExceptionFilter(Logger))
 export class UserController {
@@ -32,9 +32,8 @@ export class UserController {
    */
   // GET请求
   @Get()
-  getUsers(): any {
-    this.logger.log(`请求getUsers成功`);
-    return this.userService.findAll();
+  getUsers(@Query() query: getUserDTO): any {
+    return this.userService.findAll(query);
   }
 
   /**

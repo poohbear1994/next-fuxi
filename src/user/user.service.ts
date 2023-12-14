@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import Profile from './profile.entity';
 import Logs from 'src/logs/logs.entity';
 import Roles from 'src/roles/roles.entity';
+import { getUserDTO } from './dto/getUser.dto';
 
 @Injectable()
 export class UserService {
@@ -23,8 +24,39 @@ export class UserService {
   /**
    * @description: 查询全部用户
    */
-  findAll() {
-    return this.userRepository.find();
+  findAll(query: getUserDTO) {
+    const { limit = 10, page = 1, username, gender, role } = query;
+    return this.userRepository.find({
+      // 返回哪几列数据
+      select: {
+        username: true,
+        id: true,
+        profile: {
+          gender: true,
+          address: true,
+          photo: true,
+        },
+      },
+      // 表关联关系
+      relations: {
+        profile: true,
+        roles: true,
+      },
+      // 查询条件
+      where: {
+        username,
+        profile: {
+          gender,
+        },
+        roles: {
+          id: role,
+        },
+      },
+      // 查询数据数量
+      take: limit,
+      // 跳过多少条数据
+      skip: (page - 1) * limit,
+    });
   }
 
   /**
