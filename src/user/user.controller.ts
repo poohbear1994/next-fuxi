@@ -9,6 +9,8 @@ import {
   Post,
   Query,
   UseFilters,
+  Headers,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ConfigService } from '@nestjs/config';
@@ -70,10 +72,24 @@ export class UserController {
    * @description: 更新用户信息
    */
   @Patch('/:id')
-  updateUser(@Param('id') id: string, @Body() user: Partial<User>): any {
-    return this.userService.update(+id, user);
+  updateUser(
+    @Param('id') id: string,
+    @Body() user: Partial<User>,
+    @Headers('Authorization') headers: any,
+  ): any {
+    // todo
+    // 判断用户是否是自己？
+    // 判断用户是否有更新user的权限？
+    // 返回数据：不能包含敏感信息
+    if (id === headers) {
+      return this.userService.update(+id, user);
+    } else {
+      throw new UnauthorizedException('无权限更新用户');
+    }
   }
 
+  // 1. controller名 vs service名 vs repository名应该怎么取？
+  // 2. typeorm里面delete与remove的区别是什么？
   /**
    * @description: 删除用户信息
    */
@@ -102,8 +118,8 @@ export class UserController {
    * @description: 查询用户文件
    */
   @Get('profile')
-  getUserProfile(@Query('id') id: string) {
-    return this.userService.findProfile(+id);
+  getUserContainProfile(@Query('id') id: string) {
+    return this.userService.findUserContainProfile(+id);
   }
 
   /**

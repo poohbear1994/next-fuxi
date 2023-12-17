@@ -112,23 +112,30 @@ export class UserService {
    * @param {number} id
    * @param {Partial<User>} user
    */
-  update(id: number, user: Partial<User>) {
-    return this.userRepository.update(id, user);
+  async update(id: number, user: Partial<User>) {
+    const oldUser = await this.findUserContainProfile(id);
+    const newUser = this.userRepository.merge(oldUser, user);
+    // 联合关系更新，需要使用save方法或者queryBuilder
+    return this.userRepository.save(newUser);
+
+    // update只适合单模型更新，不适合关联关系的更新
+    // return this.userRepository.update(id, user);
   }
 
   /**
    * @description: 移除用户
    * @param {number} id
    */
-  remove(id: number) {
-    return this.userRepository.delete(id);
+  async remove(id: number) {
+    const user = await this.findById(id);
+    return this.userRepository.remove(user);
   }
 
   /**
-   * @description: 查询用户需要关联到用户文件
+   * @description: 查询用户包含它的用户文件
    * @param {number} id
    */
-  findProfile(id: number) {
+  findUserContainProfile(id: number) {
     return this.userRepository.findOne({
       where: {
         id,
