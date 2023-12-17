@@ -16,7 +16,8 @@ class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  // 设置username为唯一值，禁止用户名重复
+  @Column({ unique: true })
   username: string;
 
   @Column()

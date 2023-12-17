@@ -15,9 +15,11 @@ import { ConfigService } from '@nestjs/config';
 import User from './user.entity';
 import { HttpExceptionFilter } from 'src/filters/http-exception.filter';
 import type { getUserDTO } from './dto/getUser.dto';
+import { TypeormFilter } from 'src/filters/typeorm.filter';
 
 @Controller('user')
 @UseFilters(new HttpExceptionFilter(Logger))
+@UseFilters(new TypeormFilter())
 export class UserController {
   constructor(
     private userService: UserService,
